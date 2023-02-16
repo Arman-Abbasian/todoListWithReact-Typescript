@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TodoContext, TodoContextType } from "../../Providers/TodoProvider";
 
 const AddTodo = () => {
+    const {addTodo}=React.useContext(TodoContext) as TodoContextType;
     const [formValue,setFormValue]=React.useState({title:"",dueDate:""});
     const changeHandler=(e: React.FormEvent<HTMLInputElement>):void=>{
         console.log(e.currentTarget.value)
@@ -8,10 +10,10 @@ const AddTodo = () => {
     }
     const submitHandler=(e: React.FormEvent<HTMLFormElement>)=>{
        e.preventDefault();
-       console.log({...formValue,completed:false,date:new Date()})
+       addTodo({...formValue,completed:false,date:new Date().toDateString()})
     }
     return ( 
-        <div>
+        <div className="mb-10">
             <form className="flex flex-col gap-6" onSubmit={submitHandler}>
                 <div className="flex flex-col gap-2">
                     <label htmlFor="title">title</label>
